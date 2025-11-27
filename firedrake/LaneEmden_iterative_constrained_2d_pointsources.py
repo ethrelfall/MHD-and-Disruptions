@@ -105,12 +105,7 @@ for i in range(0,20):  # 10 to 20 iters seems sufficient in cases tested
       y0 = mesh_2d.coordinates.dat.data[i0][1]
       if ((abs(x0)>5.99) or (abs(y0)>5.99)):  # restrict to bdy points
          Greens_func_2d.sub(0).interpolate((1.0/(4*pi))*ln((x_2d-x0)**2+(y_2d-y0)**2+eps2))
-
-         # convolution integrate over whole domain
-         #integral = assemble(Greens_func_2d.sub(0)*((-0.5*(1+(tanh((uj_2d.sub(0)+jval)/scale_2d))))*(uj_2d.sub(0)+jval)-(ampp*exp(-((x_2d-xp)**2+(y_2d-yp)**2)))+(ampp*exp(-((x_2d-xp)**2+(y_2d-yp-0.25)**2)))+(ampp*exp(-((x_2d-xp)**2+(y_2d+yp)**2)))-(ampp*exp(-((x_2d-xp)**2+(y_2d+yp-0.25)**2))))*dx)
-      
          integral = assemble(Greens_func_2d.sub(0)*((-0.5*(1+(tanh((uj_2d.sub(0)+jval)/scale_2d))))*(uj_2d.sub(0)+jval)-(ampp*exp(-invw2*((x_2d-val1)**2+(y_2d-val2)**2)))+(ampp*exp(-invw2*((x_2d-val3)**2+(y_2d-val3)**2)))-(ampp*exp(-invw2*((x_2d-val2)**2+(y_2d-val1)**2)))+(ampp*exp(-invw2*((x_2d-val3)**2+(y_2d+val3)**2)))-(ampp*exp(-invw2*((x_2d-val1)**2+(y_2d+val2)**2)))+(ampp*exp(-invw2*((x_2d+val3)**2+(y_2d+val3)**2)))-(ampp*exp(-invw2*((x_2d+val2)**2+(y_2d+val1)**2)))+(ampp*exp(-invw2*((x_2d+val3)**2+(y_2d-val3)**2))))*dx)
-         #integral = assemble(Greens_func_2d.sub(0)*((-0.5*(1+(tanh((uj_2d.sub(0)+jval)/scale_2d))))*(uj_2d.sub(0)+jval)-(ampp*exp(-invw2*((x_2d-val1)**2+(y_2d-val2)**2)))+(ampp*exp(-invw2*((x_2d-val3)**2+(y_2d-val3)**2)))-(ampp*exp(-invw2*((x_2d-val2)**2+(y_2d-val1)**2)))+(ampp*exp(-invw2*((x_2d-val3)**2+(y_2d+val3)**2)))-(ampp*exp(-invw2*((x_2d-val1)**2+(y_2d+val2)**2)))+(ampp*exp(-invw2*((x_2d+val3)**2+(y_2d+val3)**2)))-(ampp*exp(-invw2*((x_2d+val2)**2+(y_2d+val1)**2)))+(ampp*exp(-invw2*((x_2d+val3)**2+(y_2d-val3)**2))))*dx)
          bcf.dat.data[i0] = integral
 
    # output solution
